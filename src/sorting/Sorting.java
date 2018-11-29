@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package sorting;
+import java.util.Random;
 
 /**
  *
@@ -14,11 +15,41 @@ public class Sorting {
     /**
      * @param args the command line arguments
      */
+    
+    static final Random rnd = new Random();
+    
     public static void main(String[] args) {
-        int[] a = {8,6,1,3,4,9,15,2};
-        int[] b = bubbleSort(a);
-        for (int i : b) {
-            System.out.print(i + " ");
+        int[] a = new int[10];
+        int[] b = new int[1000];
+        int[] c = new int[10000];
+        int[] d = new int[100000];
+        int[][] ar = {a, b, c , d};
+        populate(ar);
+        
+        
+        System.out.println("Bubble Sort 10");
+        test(a);
+        System.out.println("Bubble Sort 1000");
+        test(b);
+        System.out.println("Bubble Sort 10000");
+        test(c);
+        System.out.println("Bubble Sort 100000");
+        test(d);
+        
+        
+    }
+    
+    public static void test(int[] ar) {
+        long t = System.nanoTime();
+        bubbleSort(ar);
+        System.out.println("It took approximately " + ((System.nanoTime() - t) * 0.000000001) + " seconds.");
+    }
+    
+    public static void populate(int[][] arrays) {
+        for (int[] i : arrays) {
+            for (int j=0; j<i.length; j++) {
+                i[j] = rnd.nextInt(i.length);
+            }
         }
     }
     
@@ -51,6 +82,24 @@ public class Sorting {
                 j--;
             }
             a[j+1] = current;
+        }
+        return a;
+    }
+    
+    public static int[] selectionSort(int[] array) {
+        int[] a = array;
+        for (int i=0; i<a.length; i++) {
+            int min = i;
+            for (int j=i+1; j<a.length; j++) {
+                if (a[j] < a[min]) {
+                    min = j;
+                }
+            }
+            if (min != i) {
+                int temp = a[i];
+                a[i] = a[min];
+                a[min] = temp;
+            }
         }
         return a;
     }
